@@ -1,6 +1,3 @@
-from IPython.display import HTML
-
-memory_app_ui = """
 <!DOCTYPE html>
 <html>
 <head>
@@ -81,5 +78,6 @@ memory_app_ui = """
 </body>
 </html>
 """
+
 
 display(HTML(memory_app_ui))
