@@ -16,14 +16,14 @@
 </head>
 <body>
     <div class="app-container">
-        <h2>💖 幸福領取系統</h2>
-        <p>今日心情：<span id="mVal" style="color:var(--primary); font-weight:bold;">10</span></p>
+        <h2>💖 歡迎來到信義小公主Zoe的專屬福利系統</h2>
+        <p>小仙女請填入今日心情：<span id="mVal" style="color:var(--primary); font-weight:bold;">10</span></p>
         <input type="range" id="mood" min="1" max="10" value="10" oninput="document.getElementById('mVal').innerText=this.value" style="width:100%">
         
         <br><br>
         <button class="btn-main" id="mainBtn" onclick="processSelection()">領取今日驚喜 ✨</button>
 
-        <div id="loading">✨ 正在同步心靈感應中... ✨</div>
+        <div id="loading">✨ 福利系統盡全力計算中... ✨</div>
         <div id="result-area"></div>
 
         <div class="history">
@@ -77,3 +77,4 @@
     </script>
 </body>
 </html>
+
