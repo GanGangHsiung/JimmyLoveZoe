@@ -16,14 +16,14 @@
 </head>
 <body>
     <div class="app-container">
-        <h2>💖 歡迎來到信義小公主Zoe的專屬福利系統</h2>
-        <p>小仙女請填入今日心情：<span id="mVal" style="color:var(--primary); font-weight:bold;">10</span></p>
+        <h2>💖 歡迎來到信義小公主的專屬福利系統 💖</h2>
+        <p>Hi~Zoe,請隨機填入1-10：<span id="mVal" style="color:var(--primary); font-weight:bold;">10</span></p>
         <input type="range" id="mood" min="1" max="10" value="10" oninput="document.getElementById('mVal').innerText=this.value" style="width:100%">
         
         <br><br>
         <button class="btn-main" id="mainBtn" onclick="processSelection()">領取今日驚喜 ✨</button>
 
-        <div id="loading">✨ 福利系統盡全力計算中... ✨</div>
+        <div id="loading">✨ 福利系統連滾帶爬全力計算中... ✨</div>
         <div id="result-area"></div>
 
         <div class="history">
@@ -58,23 +58,40 @@
         }
 
         function calculateAndSave() {
-            const mood = document.getElementById('mood').value;
-            const resultArea = document.getElementById('result-area');
-            const now = new Date();
-            const dateStr = `${now.getMonth()+1}/${now.getDate()} ${now.getHours()}:${now.getMinutes()}`;
-            
-            let reward = mood < 5 ? "❤️ 心情修復包：按摩 + 甜點" : "🎉 開心加倍包：親親 + 逛街";
-            const recordText = `[${dateStr}] ${reward}`;
+    const resultArea = document.getElementById('result-area');
+    const now = new Date();
+    const dateStr = `${now.getMonth() + 1}/${now.getDate()} ${now.getHours()}:${now.getMinutes()}`;
 
-            // 顯示結果
-            resultArea.style.display = 'block';
-            resultArea.innerHTML = `<strong>計算結果：</strong><br>${reward}`;
+    // 1. 建立包含 10 個驚喜的陣列 (Array)
+    const surprisePool = [
+        "🎁 獲得今日「清空購物車」額度一次！",
+        "🍦 帶妳去吃一家妳收藏已久的甜點店",
+        "💆 全身精油按摩服務 60 分鐘",
+        "🎬 陪看一部妳想看的電影（不准滑手機）",
+        "💌 獲得一張「男友無條件道歉卡」",
+        "🍲 煮一頓妳最愛吃的晚餐給妳吃",
+        "🧺 獲得「男友洗碗一整週」券",
+        "💃 陪妳逛街一整個下午，不限時不嫌累",
+        "🎮 陪妳玩妳想玩的遊戲（被虐也甘願）",
+        "💖 獲得 999 個充滿愛的深吻"
+    ];
 
-            // 【記憶核心】：存入瀏覽器資料庫
-            localStorage.setItem('lastGfReward', recordText);
-            document.getElementById('last-record').innerText = recordText;
-        }
+    // 2. 隨機抽取邏輯：從 0 到 9 隨機挑一個數字
+    const randomIndex = Math.floor(Math.random() * surprisePool.length);
+    const reward = surprisePool[randomIndex];
+
+    const recordText = `[${dateStr}] ${reward}`;
+
+    // 3. 顯示結果到網頁
+    resultArea.style.display = 'block';
+    resultArea.innerHTML = `<strong>✨ 今日驚喜抽中：</strong><br>${reward}`;
+
+    // 4. 更新記憶紀錄
+    localStorage.setItem('lastGfReward', recordText);
+    document.getElementById('last-record').innerText = recordText;
+}
     </script>
 </body>
 </html>
+
 
