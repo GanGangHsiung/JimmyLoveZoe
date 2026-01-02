@@ -1,0 +1,85 @@
+from IPython.display import HTML
+
+memory_app_ui = """
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        :root { --primary: #ff4d94; --bg: #fff5f8; }
+        body { background: var(--bg); font-family: sans-serif; display: flex; justify-content: center; padding: 20px; }
+        .app-container { background: white; padding: 30px; border-radius: 30px; box-shadow: 0 15px 30px rgba(255, 77, 148, 0.2); width: 100%; max-width: 350px; text-align: center; }
+        .btn-main { background: var(--primary); color: white; border: none; width: 100%; padding: 15px; border-radius: 15px; cursor: pointer; font-size: 18px; font-weight: bold; }
+        #loading { display: none; margin: 20px 0; color: var(--primary); font-weight: bold; animation: blink 1s infinite; }
+        @keyframes blink { 0%, 100% {opacity: 1;} 50% {opacity: 0.3;} }
+        #result-area { display: none; margin-top: 20px; text-align: left; background: #fff9fb; padding: 15px; border-radius: 15px; border: 1px solid var(--primary); }
+        .history { margin-top: 30px; border-top: 1px solid #eee; padding-top: 20px; font-size: 13px; color: #666; text-align: left; }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <h2>💖 幸福領取系統</h2>
+        <p>今日心情：<span id="mVal" style="color:var(--primary); font-weight:bold;">10</span></p>
+        <input type="range" id="mood" min="1" max="10" value="10" oninput="document.getElementById('mVal').innerText=this.value" style="width:100%">
+        
+        <br><br>
+        <button class="btn-main" id="mainBtn" onclick="processSelection()">領取今日驚喜 ✨</button>
+
+        <div id="loading">✨ 正在同步心靈感應中... ✨</div>
+        <div id="result-area"></div>
+
+        <div class="history">
+            <strong>最近一次領取紀錄：</strong>
+            <div id="last-record">尚無紀錄</div>
+        </div>
+    </div>
+
+    <script>
+        // 頁面開啟時，自動讀取記憶
+        window.onload = function() {
+            const saved = localStorage.getItem('lastGfReward');
+            if (saved) {
+                document.getElementById('last-record').innerText = saved;
+            }
+        };
+
+        function processSelection() {
+            const btn = document.getElementById('mainBtn');
+            const loading = document.getElementById('loading');
+            const resultArea = document.getElementById('result-area');
+
+            btn.disabled = true;
+            resultArea.style.display = 'none';
+            loading.style.display = 'block';
+
+            setTimeout(() => {
+                loading.style.display = 'none';
+                calculateAndSave();
+                btn.disabled = false;
+            }, 1500);
+        }
+
+        function calculateAndSave() {
+            const mood = document.getElementById('mood').value;
+            const resultArea = document.getElementById('result-area');
+            const now = new Date();
+            const dateStr = `${now.getMonth()+1}/${now.getDate()} ${now.getHours()}:${now.getMinutes()}`;
+            
+            let reward = mood < 5 ? "❤️ 心情修復包：按摩 + 甜點" : "🎉 開心加倍包：親親 + 逛街";
+            const recordText = `[${dateStr}] ${reward}`;
+
+            // 顯示結果
+            resultArea.style.display = 'block';
+            resultArea.innerHTML = `<strong>計算結果：</strong><br>${reward}`;
+
+            // 【記憶核心】：存入瀏覽器資料庫
+            localStorage.setItem('lastGfReward', recordText);
+            document.getElementById('last-record').innerText = recordText;
+        }
+    </script>
+</body>
+</html>
+"""
+
+display(HTML(memory_app_ui))
